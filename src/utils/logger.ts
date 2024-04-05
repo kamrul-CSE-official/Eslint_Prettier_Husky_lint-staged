@@ -1,3 +1,4 @@
+/*
 import { createLogger, format, transports } from "winston";
 import DailyRotateFile from "winston-daily-rotate-file";
 import path from "path";
@@ -66,3 +67,4 @@ function getLogFilePath(logType: string): string {
 }
 
 export { logger, errorLogger };
+*/

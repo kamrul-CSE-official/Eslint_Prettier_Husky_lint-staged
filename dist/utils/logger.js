@@ -1,36 +1,35 @@
 "use strict";
-var __importDefault =
-  (this && this.__importDefault) ||
-  function (mod) {
-    return mod && mod.__esModule ? mod : { default: mod };
-  };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.errorLogger = exports.logger = void 0;
-const winston_1 = require("winston");
-const winston_daily_rotate_file_1 = __importDefault(
-  require("winston-daily-rotate-file"),
-);
-const path_1 = __importDefault(require("path"));
+/*
+import { createLogger, format, transports } from "winston";
+import DailyRotateFile from "winston-daily-rotate-file";
+import path from "path";
+
 // Define custom log format
-const myFormat = winston_1.format.printf(
-  ({ level, message, label, timestamp }) => {
-    const date = new Date(timestamp);
-    const hour = date.getHours();
-    const minute = date.getMinutes();
-    return `${date} ${hour} ${minute} [${label}] ${level}: ${message}`;
-  },
-);
-const commonOptions = {
+const myFormat = format.printf(({ level, message, label, timestamp }) => {
+  const date = new Date(timestamp);
+  const hour = date.getHours();
+  const minute = date.getMinutes();
+  return `${date} ${hour} ${minute} [${label}] ${level}: ${message}`;
+});
+
+// Define common options for both loggers
+type LoggerOptions = {
+  level: string;
+  format: any; // Define appropriate type for format
+  transports: any[]; // Define appropriate type for transports
+};
+
+const commonOptions: LoggerOptions = {
   level: "info",
-  format: winston_1.format.combine(
-    winston_1.format.label({ label: "ukil-saheb" }),
-    winston_1.format.timestamp(),
+  format: format.combine(
+    format.label({ label: "ukil-saheb" }),
+    format.timestamp(),
     myFormat,
-    winston_1.format.prettyPrint(),
+    format.prettyPrint(),
   ),
   transports: [
-    new winston_1.transports.Console(),
-    new winston_daily_rotate_file_1.default({
+    new transports.Console(),
+    new DailyRotateFile({
       datePattern: "YYYY-MM-DD-HH",
       zippedArchive: true,
       maxSize: "15m",
@@ -39,26 +38,27 @@ const commonOptions = {
     }),
   ],
 };
+
 // Configure main logger
-const logger = (0, winston_1.createLogger)(commonOptions);
-exports.logger = logger;
+const logger = createLogger(commonOptions);
+
 // Configure error logger
-const errorLoggerOptions = {
+const errorLoggerOptions: LoggerOptions = {
   ...commonOptions,
   level: "error",
   transports: [
     ...commonOptions.transports,
-    new winston_daily_rotate_file_1.default({
+    new DailyRotateFile({
       ...commonOptions,
       filename: getLogFilePath("error"),
     }),
   ],
 };
-const errorLogger = (0, winston_1.createLogger)(errorLoggerOptions);
-exports.errorLogger = errorLogger;
+const errorLogger = createLogger(errorLoggerOptions);
+
 // Utility function to generate log file path
-function getLogFilePath(logType) {
-  return path_1.default.join(
+function getLogFilePath(logType: string): string {
+  return path.join(
     process.cwd(),
     "loggers",
     "winston",
@@ -66,3 +66,6 @@ function getLogFilePath(logType) {
     `realChat-%DATE%-${logType}.log`,
   );
 }
+
+export { logger, errorLogger };
+*/
