@@ -31,6 +31,11 @@ const routes: Route[] = [
     path: "/general/signup",
     controller: authControllers.signUpGeneralUser,
   },
+  {
+    method: "POST",
+    path: "/general/login",
+    controller: authControllers.signUpGeneralUser,
+  },
 ];
 
 mapRoutesToController(routes);

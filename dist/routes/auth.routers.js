@@ -36,6 +36,11 @@ const routes = [
     path: "/general/signup",
     controller: auth_controllers_1.default.signUpGeneralUser,
   },
+  {
+    method: "POST",
+    path: "/general/login",
+    controller: auth_controllers_1.default.signUpGeneralUser,
+  },
 ];
 mapRoutesToController(routes);
 exports.default = router;
