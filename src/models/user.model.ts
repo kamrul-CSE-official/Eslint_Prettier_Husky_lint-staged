@@ -33,7 +33,7 @@ const userSchema = new Schema<IUserDocument>(
     password: { type: String, required: true, minlength: 6, select: false },
     role: { type: String, default: "General" },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 // Middleware to hash password before saving

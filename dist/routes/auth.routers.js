@@ -8,7 +8,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const asyncHandler_1 = __importDefault(require("../middleware/asyncHandler"));
 const auth_controllers_1 = __importDefault(
-  require("src/controllers/auth.controllers"),
+  require("../controllers/auth.controllers"),
 );
 const router = express_1.default.Router();
 const mapRoutesToController = (routes) => {

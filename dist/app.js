@@ -13,12 +13,7 @@ const user_routers_1 = __importDefault(require("./routes/user.routers"));
 const auth_routers_1 = __importDefault(require("./routes/auth.routers"));
 const app = (0, express_1.default)();
 // Middleware setup
-app.use(
-  (0, cors_1.default)({
-    origin: "https://ukil-saheb.vercel.app",
-    credentials: true,
-  }),
-);
+app.use((0, cors_1.default)());
 app.use(express_1.default.json());
 app.use((0, cookie_parser_1.default)());
 // Root route handler

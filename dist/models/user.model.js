@@ -13,6 +13,7 @@ const userSchema = new mongoose_1.Schema(
   {
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
+    mobile: { type: String, required: true, unique: true },
     gender: { type: String, required: true, enum: ["Male", "Female", "Other"] },
     img: { type: String, default: "https://i.ibb.co/bP8sJzJ/user.png" },
     password: { type: String, required: true, minlength: 6, select: false },

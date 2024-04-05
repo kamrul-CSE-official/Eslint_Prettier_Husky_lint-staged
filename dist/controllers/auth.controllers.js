@@ -5,7 +5,7 @@ var __importDefault =
     return mod && mod.__esModule ? mod : { default: mod };
   };
 Object.defineProperty(exports, "__esModule", { value: true });
-const auth_services_1 = __importDefault(require("src/services/auth.services"));
+const auth_services_1 = __importDefault(require("../services/auth.services"));
 const signUpGeneralUser = async (req, res) => {
   try {
     const { body: newData } = req;
