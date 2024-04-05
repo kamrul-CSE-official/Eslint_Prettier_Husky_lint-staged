@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-interface Ienv {
+type Ienv = {
   port: number | undefined;
   dbUrl: string | undefined;
   refreshTokenSecret: string | undefined;
@@ -10,7 +10,7 @@ interface Ienv {
   accessTokenExpiresIn: string | undefined;
   bcrypt: string | undefined;
   nodeEnv: string | undefined;
-}
+};
 
 const envConfig: Ienv = {
   port: parseInt(process.env.PORT || "5000", 10),

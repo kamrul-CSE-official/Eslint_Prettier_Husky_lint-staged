@@ -7,14 +7,14 @@ import limiter from "./middleware/limiter";
 const app = express();
 
 // Middleware setup
-app.use(cors({
-  origin: "https://ukil-saheb.vercel.app",
-  credentials: true,
-}));
+app.use(
+  cors({
+    origin: "https://ukil-saheb.vercel.app",
+    credentials: true,
+  }),
+);
 app.use(express.json());
 app.use(cookieParser());
-
-
 
 // Root route handler
 app.get("/", limiter, (req, res) => {
@@ -32,7 +32,9 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 });
 
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
-  res.status(500).json({ status: "fail", message: err.message || "Internal Server Error" });
+  res
+    .status(500)
+    .json({ status: "fail", message: err.message || "Internal Server Error" });
 });
 
 export default app;

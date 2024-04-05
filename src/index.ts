@@ -13,5 +13,5 @@ databaseConnection()
   })
   .catch((error: any) => {
     console.error("Database connection error ⚠️:", error?.message);
-    process.exit(1); 
+    process.exit(1);
   });

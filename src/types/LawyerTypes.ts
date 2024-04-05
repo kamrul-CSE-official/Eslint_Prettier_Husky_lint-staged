@@ -1,4 +1,4 @@
-export interface ILawyer {
+export type ILawyer = {
   name: string;
   email: string;
   gender: string;
@@ -11,4 +11,4 @@ export interface ILawyer {
   about: string;
   role: string;
   avgRating?: number;
-}
+};

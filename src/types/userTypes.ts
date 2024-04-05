@@ -1,4 +1,4 @@
-export interface IUser {
+export type IUser = {
   // _id?: string;
   name: string;
   email: string;
@@ -6,5 +6,4 @@ export interface IUser {
   img?: string;
   password: string;
   role: string;
-}
-
+};
