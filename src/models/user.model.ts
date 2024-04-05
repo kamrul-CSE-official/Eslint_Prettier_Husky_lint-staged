@@ -6,10 +6,11 @@ import envConfig from "../configs/envConfig";
 export type IUser = {
   name: string;
   email: string;
+  mobile: string;
   gender: "Male" | "Female" | "Other";
   img?: string;
   password: string;
-  role: string;
+  role?: string;
 };
 
 type IUserDocument = IUser & Document;
@@ -26,12 +27,13 @@ const userSchema = new Schema<IUserDocument>(
   {
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
+    mobile: { type: String, required: true, unique: true },
     gender: { type: String, required: true, enum: ["Male", "Female", "Other"] },
     img: { type: String, default: "https://i.ibb.co/bP8sJzJ/user.png" },
     password: { type: String, required: true, minlength: 6, select: false },
     role: { type: String, default: "General" },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 // Middleware to hash password before saving
