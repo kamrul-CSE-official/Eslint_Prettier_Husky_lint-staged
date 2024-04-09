@@ -23,7 +23,7 @@ export const createAccessToken = (payload: JwtPayload): string => {
 export const verifyRefreshToken = (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   const refreshToken = req.cookies?.refreshToken;
   if (!refreshToken) {
@@ -43,14 +43,14 @@ export const verifyRefreshToken = (
       }
       (req as any).refreshTokenData = decoded;
       next();
-    }
+    },
   );
 };
 
 export const verifyAccessToken = (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   const accessToken: string | undefined =
     req.headers?.authorization?.split(" ")[1];
@@ -90,8 +90,6 @@ export const verifyAccessToken = (
         (req as any).accessTokenData = decoded;
         next();
       }
-    }
+    },
   );
 };
-
-

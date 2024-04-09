@@ -4,7 +4,7 @@ import { createAccessToken, createRefreshToken } from "../utils/jwtToken";
 
 const signUpGeneralUser = async (
   req: Request,
-  res: Response
+  res: Response,
 ): Promise<void> => {
   try {
     const { body: newData } = req;
