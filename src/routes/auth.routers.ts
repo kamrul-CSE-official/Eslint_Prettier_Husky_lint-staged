@@ -1,18 +1,20 @@
 import express, { Request, Response, Router } from "express";
 import asyncHandler from "../middleware/asyncHandler";
 import authControllers from "../controllers/auth.controllers";
+import { protectRoute } from "../middleware/protectRoute";
 
 const router: Router = express.Router();
 type Route = Record<string, any>;
 
 const mapRoutesToController = (routes: Route[]) => {
-  routes.forEach(({ method, path, controller }) => {
+  routes.forEach(({ method, path, controller, middleware }) => {
+    // Add middleware to route definition
     switch (method) {
       case "GET":
-        router.get(path, asyncHandler(controller));
+        router.get(path, middleware, asyncHandler(controller));
         break;
       case "POST":
-        router.post(path, asyncHandler(controller));
+        router.post(path, middleware, asyncHandler(controller));
         break;
       default:
         router.all(path, (req: Request, res: Response) => {
@@ -28,13 +30,21 @@ const mapRoutesToController = (routes: Route[]) => {
 const routes: Route[] = [
   {
     method: "POST",
-    path: "/general/signup",
-    controller: authControllers.signUpGeneralUser,
+    path: "/signup",
+    controller: authControllers.signUpUser,
+    middleware: [],
   },
   {
     method: "POST",
     path: "/login",
     controller: authControllers.login,
+    middleware: [],
+  },
+  {
+    method: "POST",
+    path: "/reset-password",
+    controller: authControllers.resetPassword,
+    middleware: [protectRoute],
   },
 ];
 

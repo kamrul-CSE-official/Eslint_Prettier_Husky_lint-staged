@@ -5,8 +5,8 @@ import envConfig from "../configs/envConfig";
 // Define interfaces
 export type IUser = {
   name: string;
-  email: string;
-  mobile: string;
+  email: string | undefined;
+  mobile: string | undefined;
   gender: "Male" | "Female" | "Other";
   img?: string;
   password: string;
@@ -18,23 +18,42 @@ type IUserModel = {
   isUserExist(email: string): Promise<IUserDocument | null>;
   isPasswordMatched(
     givenPassword: string,
-    savedPassword: string,
+    savedPassword: string
   ): Promise<boolean>;
 } & Model<IUserDocument>;
 
 // Define User Schema
 const userSchema = new Schema<IUserDocument>(
   {
-    name: { type: String, required: true },
-    email: { type: String, required: true, unique: true },
-    mobile: { type: String, required: true, unique: true },
-    gender: { type: String, required: true, enum: ["Male", "Female", "Other"] },
+    name: { type: String, required: [true, "Name is required"] },
+    email: {
+      type: String,
+      required: [true, "Email is required"],
+      unique: [true, "Email must be unique"],
+    },
+    mobile: {
+      type: String,
+      required: [true, "Mobile is required"],
+      unique: [true, "Mobile must be unique"],
+    },
+    gender: {
+      type: String,
+      required: [true, "Gender is required"],
+      enum: { values: ["Male", "Female", "Other"], message: "Invalid gender" },
+    },
     img: { type: String, default: "https://i.ibb.co/bP8sJzJ/user.png" },
-    password: { type: String, required: true, minlength: 6, select: false },
+    password: {
+      type: String,
+      required: [true, "Password is required"],
+      minlength: [6, "Password must be at least 6 characters long"],
+      select: false,
+    },
     role: { type: String, default: "General" },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
+
+
 
 // Middleware to hash password before saving
 userSchema.pre<IUserDocument>("save", async function (next) {

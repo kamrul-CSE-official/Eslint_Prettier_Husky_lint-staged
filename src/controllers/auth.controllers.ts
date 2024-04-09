@@ -2,13 +2,10 @@ import { Request, Response } from "express";
 import authServices from "../services/auth.services";
 import { createAccessToken, createRefreshToken } from "../utils/jwtToken";
 
-const signUpGeneralUser = async (
-  req: Request,
-  res: Response,
-): Promise<void> => {
+const signUpUser = async (req: Request, res: Response): Promise<void> => {
   try {
     const { body: newData } = req;
-    const result = await authServices.signUpGeneralUser(newData);
+    const result = await authServices.signUpUser(newData);
     res.status(200).json({
       status: 200,
       message: "Account created successfully",
@@ -54,9 +51,24 @@ const login = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
+const resetPassword = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const token = req.headers.authorization || "";
+    const result = authServices.resetPassword(req.body, token);
+    res
+      .status(500)
+      .json({ status: 500, message: "reset password done", data: result });
+  } catch (error) {
+    const errorMessage =
+      error instanceof Error ? error.message : "Internal server error";
+    res.status(500).json({ status: 500, message: errorMessage });
+  }
+};
+
 const authControllers = {
-  signUpGeneralUser,
+  signUpUser,
   login,
+  resetPassword,
 };
 
 export default authControllers;
