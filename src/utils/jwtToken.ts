@@ -1,29 +1,29 @@
 import jwt from "jsonwebtoken";
 import { NextFunction, Request, Response } from "express";
-import env from "../configs/envConfig";
+import envConfig from "../configs/envConfig";
 
 type JwtPayload = {
   [key: string]: any;
 };
 
-const createRefreshToken = (payload: JwtPayload): string => {
-  return jwt.sign(payload, env.refreshTokenSecret as string, {
-    expiresIn: env.refreshTokenExpiresIn,
+export const createRefreshToken = (payload: JwtPayload): string => {
+  return jwt.sign(payload, envConfig.refreshTokenSecret as string, {
+    expiresIn: envConfig.refreshTokenExpiresIn,
     algorithm: "HS384",
   });
 };
 
-const createAccessToken = (payload: JwtPayload): string => {
-  return jwt.sign(payload, env.accessTokenSecret as string, {
-    expiresIn: env.accessTokenExpiresIn,
+export const createAccessToken = (payload: JwtPayload): string => {
+  return jwt.sign(payload, envConfig.accessTokenSecret as string, {
+    expiresIn: envConfig.accessTokenExpiresIn,
     algorithm: "HS512",
   });
 };
 
-const verifyRefreshToken = (
+export const verifyRefreshToken = (
   req: Request,
   res: Response,
-  next: NextFunction,
+  next: NextFunction
 ) => {
   const refreshToken = req.cookies?.refreshToken;
   if (!refreshToken) {
@@ -34,7 +34,7 @@ const verifyRefreshToken = (
 
   jwt.verify(
     refreshToken,
-    env.refreshTokenSecret as string,
+    envConfig.refreshTokenSecret as string,
     (err: any, decoded: any) => {
       if (err) {
         return res
@@ -43,11 +43,15 @@ const verifyRefreshToken = (
       }
       (req as any).refreshTokenData = decoded;
       next();
-    },
+    }
   );
 };
 
-const verifyAccessToken = (req: Request, res: Response, next: NextFunction) => {
+export const verifyAccessToken = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const accessToken: string | undefined =
     req.headers?.authorization?.split(" ")[1];
   if (!accessToken) {
@@ -58,7 +62,7 @@ const verifyAccessToken = (req: Request, res: Response, next: NextFunction) => {
 
   jwt.verify(
     accessToken,
-    env.accessTokenSecret as string,
+    envConfig.accessTokenSecret as string,
     (err: any, decoded: any) => {
       if (err) {
         console.log("Error aaa", err.name);
@@ -86,13 +90,8 @@ const verifyAccessToken = (req: Request, res: Response, next: NextFunction) => {
         (req as any).accessTokenData = decoded;
         next();
       }
-    },
+    }
   );
 };
 
-export {
-  createRefreshToken,
-  createAccessToken,
-  verifyRefreshToken,
-  verifyAccessToken,
-};
+

@@ -33,8 +33,8 @@ const routes: Route[] = [
   },
   {
     method: "POST",
-    path: "/general/login",
-    controller: authControllers.signUpGeneralUser,
+    path: "/login",
+    controller: authControllers.login,
   },
 ];
 
